@@ -12,3 +12,6 @@ looks complicated
 [link](https://www.jaist.ac.jp/~kurkoski/teaching/portfolio/uec_s05/S05-LDPC%20Lecture%201.pdf)
 
 There are some interesting graphs that we might be interested to
+
+## 64 bit Hamming code encode decode using VHDL
+[link](https://www.iasj.net/iasj/download/0f7034a424de01d6)
