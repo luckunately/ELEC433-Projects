@@ -1,0 +1,8 @@
+
+State Machine - |Hamming72out|state
+Name state.good state.correct state.comein state.Idel state.bad 
+state.Idel 0 0 0 0 0 
+state.comein 0 0 1 1 0 
+state.correct 0 1 0 1 0 
+state.good 1 0 0 1 0 
+state.bad 0 0 0 1 1 
