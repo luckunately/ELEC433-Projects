@@ -15,3 +15,6 @@ There are some interesting graphs that we might be interested to
 
 ## 64 bit Hamming code encode decode using VHDL
 [link](https://www.iasj.net/iasj/download/0f7034a424de01d6)
+
+## LDPC overview
+[link](https://arxiv.org/ftp/arxiv/papers/2009/2009.08645.pdf)
