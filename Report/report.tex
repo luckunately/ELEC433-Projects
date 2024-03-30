@@ -87,8 +87,12 @@ Given a parity-check matrix $H$ for an LDPC code, the generator matrix $G$ can b
     \item Since we are in a binary field, $bH_1^T = mH_2^T \implies b = mH_2^T(H_1^T)^{-1}$. Name the matrix $H_2^T(H_1^T)^{-1}$ as $A$.
     \item So the generator matrix $G$ is $[A, I_{n-k}]$.
 \end{enumerate}
-\section{LDPC on FPGA}
+
 \section{Hamming code as comparison}
+\section{LDPC on FPGA}
+Create an LDPC code parity matrix that could achieve a rate similar to the hamming code we used for comparison. $R=\frac{k}{n}=\frac{64}{72}=1-\frac{8}{72} = \frac{j}{i}$. To achieve this, we can get up a parity-check matrix with $n=72, j=2, i=18$.  !!!!!!!!!!!! Maybe try other parmaeters as well?????????????????/
+
+Need to apply a way of generating $H$ here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 \section{Conclusion}
 \section{References}
 \begin{enumerate}
