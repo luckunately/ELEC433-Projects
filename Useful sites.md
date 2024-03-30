@@ -18,3 +18,11 @@ There are some interesting graphs that we might be interested to
 
 ## LDPC overview
 [link](https://arxiv.org/ftp/arxiv/papers/2009/2009.08645.pdf)
+
+## LDPC introductory paper
+[link](https://www.sciencedirect.com/science/article/pii/S1110016818300619#:~:text=Irregularity%20of%20an%20irregular%20LDPC,on%20columns%20and%2For%20rows.&text=The%20LDPC%20codes%20can%20be%20described%20by%20a%20graphical%20representation,corresponds%20to%20the%20matrix%20H.)
+
+## Irregular LDPC code UT papaer
+[link](https://www.comm.utoronto.ca/~weiyu/ben_masoud_LDPC_complexity.pdf)
+
+But to be honest, do not think I would understand this
