@@ -36,9 +36,9 @@ There are two main types of LDPC codes: regular and irregular. Regular LDPC code
 \subsubsection{Regular LDPC codes}
 Gallager developed the LDPC code as his Ph.D. thesis in 1962. The parity-check matrix of a regular LDPC code is defined by the following equation:
 
-A regular LDPC code $(j,k)$ has a weight of $j$ for each column and a weight of $k$ for each row.\ref{[1]} 
+A regular LDPC code $(j,i)$ has a weight of $j$ for each column and a weight of $i$ for each row.\ref{[1]} 
 
-An example of a parity-check matrix for a regular LDPC code where $j=3$ and $k=4$ is shown below:
+An example of a parity-check matrix for a regular LDPC code where $j=3$ and $i=4$ is shown below:
 
 $\begin{bmatrix}
     1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
@@ -55,7 +55,7 @@ $\begin{bmatrix}
 
 So this is a $(3,4)$ regular LDPC code where the column weight is 3 and the row weight is 4. The dimension of the code is $n=12$ and $n-k=9$. 
 
-The rate $R=1-\frac{j}{k}=\frac{k}{n}=\frac{1}{4}$
+The rate $R=1-\frac{j}{i}=\frac{k}{n}=\frac{1}{4}$
 \subsubsection{Irregular LDPC codes}
 Irregular LDPC codes have varying column and row weights. However, they are distributed uniformly across the parity-check matrix. Irregular LDPC codes can achieve better performance than regular LDPC codes, but they are more difficult to analyze and implement.
 \subsection{Tanner graph}
