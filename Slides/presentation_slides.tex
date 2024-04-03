@@ -1,14 +1,14 @@
 \documentclass{beamer}
 
-\title{Insert Title}
+\title{Group 3: LDPC DRAM Decoder/Encoder}
 \author{Tom Wang \\ Natalie Balashov}
 % \author{Natalie Balashov\\[10mm]{\small Supervisors: \\ Person One \\ Person Two}}
-\date{Insert date here}
+\date{April 10th, 2024}
 
 \begin{document}
 
 \begin{frame}
-    \titlepage 
+    \titlepage
 \end{frame}
 
 \begin{frame}{Intro}
@@ -16,10 +16,10 @@
     \begin{enumerate}[I]
         \item Point A
         \item Point B
-    \begin{enumerate}[i]
-        \item part 1
-        \item part 2
-    \end{enumerate}
+              \begin{enumerate}[i]
+                  \item part 1
+                  \item part 2
+              \end{enumerate}
         \item Point C
         \item Point D
     \end{enumerate}
@@ -28,9 +28,9 @@
 \begin{frame}{Using Columns}
     \begin{columns}
         \column{0.5\textwidth}
-            column 1 with background info
+        column 1 with background info
         \column{0.5\textwidth}
-            column 2 with more background info
+        column 2 with more background info
     \end{columns}
 \end{frame}
 
@@ -45,12 +45,12 @@
 \begin{frame}{Pictures with text beside}
     \begin{columns}
         \column{0.5\textwidth}
-            column 1 with background info
+        column 1 with background info
         \column{0.5\textwidth}
-            % \begin{figure}
-            %     \includegraphics[scale=0.1]{figures/figure_name.png}
-            %     \caption{A sample figure}
-            % \end{figure}
+        % \begin{figure}
+        %     \includegraphics[scale=0.1]{figures/figure_name.png}
+        %     \caption{A sample figure}
+        % \end{figure}
     \end{columns}
 \end{frame}
 
@@ -94,7 +94,7 @@
     \begin{proof}
         $\omega +\phi = \epsilon$
     \end{proof}
-\end{frame} 
+\end{frame}
 
 \begin{frame}[fragile]{Including Code}
     \begin{semiverbatim}
@@ -105,8 +105,8 @@
     \end{semiverbatim}
     \begin{semiverbatim}
         int function() \{
-            int i = 0;
-            return i * i;
+        int i = 0;
+        return i * i;
         \}
     \end{semiverbatim}
 \end{frame}
@@ -114,15 +114,54 @@
 \begin{frame}{Table example}
     \begin{table}
         \begin{tabular}{l | c | c | c | c }
-        Competitor Name & Swim & Cycle & Run & Total \\
-        \hline \hline
-        John T & 13:04 & 24:15 & 18:34 & 55:53 \\
-        Norman P & 8:00 & 22:45 & 23:02 & 53:47\\
-        Alex K & 14:00 & 28:00 & n/a & n/a\\
-        Sarah H & 9:22 & 21:10 & 24:03 & 54:35
+            Competitor Name & Swim  & Cycle & Run   & Total \\
+            \hline \hline
+            John T          & 13:04 & 24:15 & 18:34 & 55:53 \\
+            Norman P        & 8:00  & 22:45 & 23:02 & 53:47 \\
+            Alex K          & 14:00 & 28:00 & n/a   & n/a   \\
+            Sarah H         & 9:22  & 21:10 & 24:03 & 54:35
         \end{tabular}
         \caption{Triathlon results}
     \end{table}
-\end{frame} 
+\end{frame}
+
+\begin{frame}{Hamming implementation}
+    Typical Hamming code implementation uses 64-bit to 72-bit encoding.
+
+    This typical implementation is called \textbf{SECDED} (Single Error Correction,
+    Double Error Detection) Hamming code.
+
+    The concept of Hamming code is detecting errors in half of the codewords. And
+    then with different combinations of deleting patterns, we can locate a single
+    bit.
+
+    \begin{figure}[htbp]
+        \centerline{\includegraphics[scale = 0.6]{Images/Hamming_example.png}}
+        \caption{Parity bits and data bits in a Hamming code.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Example of correcting error}
+    There are a total of 72 bits, which can be expressed in binary from $6'b000\_0000$ to $6'b 100\_0111$.
+
+    Mark the unique position vector as \texttt{vec[6:0]} and let it be bijective to
+    parity bits \texttt{p[6:0]}.
+
+    We order the bits as shown below:
+
+    \begin{figure}[htbp]
+        \centerline{\includegraphics[scale = 0.6]{Images/Hamming_bits_order.png}}
+        \caption{Number parity bits and data bits in a Hamming code.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{FPGA Implementation}
+    Logic can be easily achieved with a series of \textit{xor gates} and \textit{and gates}.
+
+    RTL viewer can be found on GitHub.
+
+    According to Quartus timing analysis, the highest frequency it can run is
+    \textbf{387.3 MHz} under \textit{slow 1100 mV 85C mode}.
+\end{frame}
 
 \end{document}

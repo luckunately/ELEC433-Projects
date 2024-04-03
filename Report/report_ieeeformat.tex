@@ -6,7 +6,7 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \setcounter{MaxMatrixCols}{12} % increase maximum matrix width
 \begin{document}
 
@@ -15,8 +15,8 @@
 }
 
 \author{\IEEEauthorblockN{Tom Wang}
-\and
-\IEEEauthorblockN{Natalie Balashov}
+  \and
+  \IEEEauthorblockN{Natalie Balashov}
 }
 
 \maketitle
@@ -29,98 +29,184 @@
 TODO: add introduction here
 
 \section{LDPC Codes}
-LDPC codes, or low-density parity-check codes, are a class of linear block codes that are characterized by sparse parity-check matrices.
-The sparsity of the parity-check matrix allows for efficient encoding and decoding algorithms.
-LDPC codes are also known to achieve near Shannon capacity performance when decoded using iterative message-passing algorithms.
+LDPC codes, or low-density parity-check codes, are a class of linear block
+codes that are characterized by sparse parity-check matrices. The sparsity of
+the parity-check matrix allows for efficient encoding and decoding algorithms.
+LDPC codes are also known to achieve near Shannon capacity performance when
+decoded using iterative message-passing algorithms.
 
 \subsection{Types of LDPC Codes}
-There are two main types of LDPC codes: regular and irregular.
-Regular LDPC codes have a constant column weight and row weight, while irregular LDPC codes have varying column and row weights.
-Regular LDPC codes are easier to analyze and implement, but irregular LDPC codes can achieve better performance.
+There are two main types of LDPC codes: regular and irregular. Regular LDPC
+codes have a constant column weight and row weight, while irregular LDPC codes
+have varying column and row weights. Regular LDPC codes are easier to analyze
+and implement, but irregular LDPC codes can achieve better performance.
 
-Gallager developed the LDPC code as his Ph.D. thesis in 1962.
-The parity-check matrix of a regular LDPC code is defined by the following equation:
+Gallager developed the LDPC code as his Ph.D. thesis in 1962. The parity-check
+matrix of a regular LDPC code is defined by the following equation:
 
-A regular LDPC code $(j,i)$ has a weight of $j$ for each column and a weight of $i$ for each row.\ref{[1]}
+A regular LDPC code $(j,i)$ has a weight of $j$ for each column and a weight of
+$i$ for each row.\ref{[1]}
 
-An example of a parity-check matrix for a regular LDPC code where $j=3$ and $i=4$ is shown below:
+An example of a parity-check matrix for a regular LDPC code where $j=3$ and
+$i=4$ is shown below:
 
 $$\begin{bmatrix}
-  1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
-  0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0\\
-  0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1\\
-  1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0\\
-  0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0\\
-  0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0\\
-  0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1\\
-  1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0\\
-  0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0\\
-  0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1
-\end{bmatrix}$$
+    1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+    1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 \\
+    1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1
+  \end{bmatrix}$$
 
-So this is a $(3,4)$ regular LDPC code where the column weight is 3 and the row weight is 4. The dimension of the code is $n=12$ and $n-k=9$.
+So this is a $(3,4)$ regular LDPC code where the column weight is 3 and the row
+weight is 4. The dimension of the code is $n=12$ and $n-k=9$.
 
 The rate $R=1-\frac{j}{i}=\frac{k}{n}=\frac{1}{4}$.
 
-Irregular LDPC codes have varying column and row weights.
-However, they are distributed uniformly across the parity-check matrix.
-Irregular LDPC codes can achieve better performance than regular LDPC codes, but they are more difficult to analyze and implement.
+Irregular LDPC codes have varying column and row weights. However, they are
+distributed uniformly across the parity-check matrix. Irregular LDPC codes can
+achieve better performance than regular LDPC codes, but they are more difficult
+to analyze and implement.
 
 \subsection{Tanner Graphs}
-A Tanner graph is a bipartite graph that represents the parity-check matrix of an LDPC code. The Tanner graph consists of two sets of nodes: variable nodes and check nodes. The edges of the graph connect variable nodes to check nodes and vice versa.
+A Tanner graph is a bipartite graph that represents the parity-check matrix of
+an LDPC code. The Tanner graph consists of two sets of nodes: variable nodes
+and check nodes. The edges of the graph connect variable nodes to check nodes
+and vice versa.
 
-The Tanner graph is used to visualize the structure of the LDPC code and to develop efficient decoding algorithms.
+The Tanner graph is used to visualize the structure of the LDPC code and to
+develop efficient decoding algorithms.
 
 For example, for this matrix: \[
-    \begin{bmatrix}
-        1 & 1 & 0 & 0\\
-        1 & 0 & 1 & 1
-    \end{bmatrix}
+  \begin{bmatrix}
+    1 & 1 & 0 & 0 \\
+    1 & 0 & 1 & 1
+  \end{bmatrix}
 \]
 
 The Tanner graph is shown below:
 
 \begin{figure}[htbp]
-\centerline{\includegraphics{Images/tanner_graph.png}}
-\caption{Example of a figure caption.}
-\label{fig}
+  \centerline{\includegraphics{Images/tanner_graph.png}}
+  \caption{Example of a figure caption.}
+  \label{fig}
 \end{figure}
 
 In Fig. \ref{fig}, we see that there are two parity nodes.
 
-A \textbf{cycle} in a Tanner graph is a closed path that starts and ends at the same node.
+A \textbf{cycle} in a Tanner graph is a closed path that starts and ends at the
+same node.
 
-A \textbf{girth} of a Tanner graph is the length of the shortest cycle in the graph. A larger girth is desirable because it leads to better error-correction performance.
+A \textbf{girth} of a Tanner graph is the length of the shortest cycle in the
+graph. A larger girth is desirable because it leads to better error-correction
+performance.
 
 \subsection{Encoding and Generator Matrices}
-Given a parity-check matrix $H$ for an LDPC code, the generator matrix $G$ can be constructed using the following steps:
+Given a parity-check matrix $H$ for an LDPC code, the generator matrix $G$ can
+be constructed using the following steps:
 
 \begin{enumerate}
-    \item Assume that the encoded code $c$ of length $n$ is composed of the parity bits $b$ and the message bits $m$ in a form $c = [b, m]$.
-    \item Then if there are no errors in the code, $cH^T = [b, m]H^T = 0$.
-    \item Divide $H$ into $H = [H_1, H2]^T$ where $H_1$ is a square matrix of size $n-k$. Note that $b$ is of length $n-k$ as well. So we can break the matrix multiplication into $[b, m][H_1, H_2]^T = bH_1^T + mH_2^T = 0$.
-    \item Since we are in a binary field, $bH_1^T = mH_2^T \implies b = mH_2^T(H_1^T)^{-1}$. Name the matrix $H_2^T(H_1^T)^{-1}$ as $A$.
-    \item So the generator matrix $G$ is $[A, I_{n-k}]$.
+  \item Assume that the encoded code $c$ of length $n$ is composed of the parity bits
+        $b$ and the message bits $m$ in a form $c = [b, m]$.
+  \item Then if there are no errors in the code, $cH^T = [b, m]H^T = 0$.
+  \item Divide $H$ into $H = [H_1, H2]^T$ where $H_1$ is a square matrix of size $n-k$.
+        Note that $b$ is of length $n-k$ as well. So we can break the matrix
+        multiplication into $[b, m][H_1, H_2]^T = bH_1^T + mH_2^T = 0$.
+  \item Since we are in a binary field, $bH_1^T = mH_2^T \implies b =
+          mH_2^T(H_1^T)^{-1}$. Name the matrix $H_2^T(H_1^T)^{-1}$ as $A$.
+  \item So the generator matrix $G$ is $[A, I_{n-k}]$.
 \end{enumerate}
 
 \subsection{Decoding and Parity Check Matrices}
 
 \section{Implementation of a Regular LDPC Code in HDL}
-We implemented an LDPC code parity matrix that could achieve a rate similar to the hamming code we used for comparison.
+We implemented an LDPC code parity matrix that could achieve a rate similar to
+the hamming code we used for comparison.
 $R=\frac{k}{n}=\frac{64}{72}=1-\frac{8}{72} = \frac{j}{i}$.
 
-To achieve this, we can attempt to implement encoding and decoding schemes for the LDPC code with parameters $n=72, j=2, i=18$, or the LDPC code with parameters $n=72, j=4, i=36$.
+To achieve this, we can attempt to implement encoding and decoding schemes for
+the LDPC code with parameters $n=72, j=2, i=18$, or the LDPC code with
+parameters $n=72, j=4, i=36$.
 
 \section{Comparison with Hamming Code HDL Implementation}
-TODO: add description
+Typical Hamming code implementation uses 64-bit to 72-bit encoding. Input is 64
+bits since it is a typical cache line size. Although it is not an optimal
+hamming code, it is a good visit pattern for computing systems.
 
+This typical implementation is called \textbf{SECDED} (Single Error Correction,
+Double Error Detection) Hamming code. It can detect and correct single-bit
+errors and detect double-bit errors.
+\subsection{Implementation}
+The concept of Hamming code is detecting errors in half of the codewords. And
+then with different combinations of deleting patterns, we can locate a single
+bit.
+
+\begin{figure}[htbp]
+  \centerline{\includegraphics{Images/Hamming_example.png}}
+  \caption{Parity bits and data bits in a Hamming code.}
+  \label{fig_2}
+\end{figure}
+
+Since the output is more than 64 bits, we need 7 parity bits as shown in
+\ref{fig_2}. For an interactive example, check out the Excel sheet in our
+\href{https://github.com/luckunately/ELEC433-Projects}{GitHub Repo}[1]. %how can I add the reference hyperlink here?
+
+The advantage of this kind of implementation would be that the difference of
+parity bits is the coordinate of the error bit which makes it easier to find
+the error bit.
+
+\subsubsection{Example of correcting error}
+
+We order the bits as shown below:
+
+\begin{figure}[htbp]
+  \centerline{\includegraphics{Images/Hamming_bits_order.png}}
+  \caption{Number parity bits and data bits in a Hamming code.}
+  \label{fig_3}
+\end{figure}
+
+There are a total of 72 bits, which can be expressed in binary from
+$6'b000\_0000$ to $6'b 100\_0111$. Note that there are exactly 7 bits which
+corresponds to 7 parity bits. Mark the unique position vector as
+\texttt{vec[6:0]} and let it be bijective to parity bits \texttt{p[6:0]}.
+
+Now if we let $p0$ monitor all of the bits where the \texttt{vec[0]} is 1, $p1$
+monitor all of the bits where the \texttt{vec[1]} is 1, and so on, we can find
+the error bit by checking the parity bits. Note that the parity bit itself is
+included in monitoring as well.
+
+This way, if we calculate the parity bits and compare them with the received
+parity bits, we can find the error bit. Since the parity bits are the
+coordinate of the error bit, we can find the error bit by XORing the parity
+bits.
+\subsection{Implementation on FPGA}
+Because of the nature of the Hamming code, it is easier to implement on FPGA.
+The error bit can be found by XORing the parity bits. The implementation can be
+found in our \href{https://github.com/luckunately/ELEC433-Projects}{GitHub
+  Repo}[1]. %how can I add the reference hyperlink here?
+
+Although there are nearly 71 xor on a single combinational logic path, the time
+delay is not significant. According to Quartus timing analysis, the highest
+frequency it can run is \textbf{387.3 MHz} under \textit{slow 1100 mV 85C
+  mode}.
+
+We will use this parameter to compare with the LDPC code.
+% \subsubsection{Remarks on decoding}
+% Encoding is relatively easy to implement. Just need to encode it with a series of XOR gates.
+
+% However, decoding is more difficult. The decoding algorithm for the Hamming code is the \textbf{syndrome decoding} algorithm. The algorithm is as follows:
 \section{Conclusion}
 TODO: add conclusion
 
 \begin{thebibliography}{00}
   \bibitem{b1} T. Wang and N. Balashov, ELEC433-Projects, 2024, GitHub repository, \url{https://github.com/luckunately/ELEC433-Projects}.
-\bibitem{b2} B. Kurkoski, Introduction to Low-Density Parity Check Codes, \url{https://www.jaist.ac.jp/~kurkoski/teaching/portfolio/uec_s05/S05-LDPC%20Lecture%201.pdf}.
-\bibitem{b3} R.G. Gallager, Low-Density Parity-Check Codes. Cambridge, MA: MIT Press, 1963 (Sc.D. MIT, 1960).
+  \bibitem{b2} B. Kurkoski, Introduction to Low-Density Parity Check Codes, \url{https://www.jaist.ac.jp/~kurkoski/teaching/portfolio/uec_s05/S05-LDPC%20Lecture%201.pdf}.
+  \bibitem{b3} R.G. Gallager, Low-Density Parity-Check Codes. Cambridge, MA: MIT Press, 1963 (Sc.D. MIT, 1960).
 \end{thebibliography}
 
 \end{document}
