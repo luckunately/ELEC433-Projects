@@ -34,7 +34,7 @@ codes that are characterized by sparse parity-check matrices. The sparsity of
 the parity-check matrix allows for efficient encoding and decoding algorithms.
 LDPC codes are also known to achieve near Shannon capacity performance when
 decoded using iterative message-passing algorithms.
-LDPC codes were first proposed by Gallager, as part of his Ph.D. thesis in 1960 $[3]$.
+LDPC codes were first proposed by Gallager, as part of his Ph.D. thesis in 1960 [3].
 
 An LDPC code with parameters $(n,j,i)$ has a block length of $n$, where each column of the parity check matrix contains at most $j$ ones, and where each row of the parity matrix contains at most $i$ ones.
 
@@ -44,7 +44,7 @@ codes have a constant column weight and row weight, while irregular LDPC codes
 have varying column and row weights. Regular LDPC codes are easier to analyze
 and implement, but irregular LDPC codes can achieve better performance.
 
-A regular $(n,j,i)$ LDPC code has a column weight of $j$ and a row weight of $i$ $[2]$.
+A regular $(n,j,i)$ LDPC code has a column weight of $j$ and a row weight of $i$ [2].
 
 For example, a parity-check matrix for a regular LDPC code where $j=3$ and $i=4$ may be the following:
 
@@ -104,8 +104,7 @@ A larger girth is desirable because it leads to better error-correction performa
 
 \subsection{Encoding and Generator Matrices}
 Given a parity-check matrix $H$ for an LDPC code, the generator matrix $G$ can
-be constructed using the following steps:
-
+be constructed in the following way:
 \begin{enumerate}
   \item Assume that the encoded code $c$ of length $n$ is composed of the parity bits
         $b$ and the message bits $m$ in a form $c = [b, m]$.
@@ -119,8 +118,13 @@ be constructed using the following steps:
 \end{enumerate}
 
 \subsection{Decoding and Parity Check Matrices}
+TODO
 
 \section{Implementation of a Regular LDPC Code in HDL}
+An interesting point that Gallager makes in Chapter III of his thesis [3] is the fact that the notion of an ``optimal'' $(j,i)$ is not well defined.
+Gallager states that a regular LDPC code's limitation of capacity implies that the ``best'' $(j,i)$ code would perform essentially on the same level as a ``typical'', i.e. ``less optimal'' LDPC code with parameters $(j,i)$.
+Consequently, when implementing an LDPC code in HDL, a convenient parity check matrix was selected for simplicity.
+
 We implemented an LDPC code parity matrix that could achieve a rate similar to
 the hamming code we used for comparison.
 $R=\frac{k}{n}=\frac{64}{72}=1-\frac{8}{72} = \frac{j}{i}$.
