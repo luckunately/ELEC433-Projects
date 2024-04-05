@@ -10,7 +10,7 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \setcounter{MaxMatrixCols}{12} % increase maximum matrix width
 \begin{document}
 
-\title{Application of LDPC Codes In Computer Memory\\
+\title{LDPC Codes In Computer Memory\\
 {\large ELEC 433 Final Project}
 }
 
@@ -29,11 +29,14 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 TODO: add introduction here
 
 \section{LDPC Codes}
-LDPC codes, or low-density parity-check codes, are a class of linear block
+Low-density parity-check codes, also known as LDPC codes, are a class of linear block
 codes that are characterized by sparse parity-check matrices. The sparsity of
 the parity-check matrix allows for efficient encoding and decoding algorithms.
 LDPC codes are also known to achieve near Shannon capacity performance when
 decoded using iterative message-passing algorithms.
+LDPC codes were first proposed by Gallager, as part of his Ph.D. thesis in 1960 $[3]$.
+
+An LDPC code with parameters $(n,j,i)$ has a block length of $n$, where each column of the parity check matrix contains at most $j$ ones, and where each row of the parity matrix contains at most $i$ ones.
 
 \subsection{Types of LDPC Codes}
 There are two main types of LDPC codes: regular and irregular. Regular LDPC
@@ -41,14 +44,9 @@ codes have a constant column weight and row weight, while irregular LDPC codes
 have varying column and row weights. Regular LDPC codes are easier to analyze
 and implement, but irregular LDPC codes can achieve better performance.
 
-Gallager developed the LDPC code as his Ph.D. thesis in 1962. The parity-check
-matrix of a regular LDPC code is defined by the following equation:
+A regular $(n,j,i)$ LDPC code has a column weight of $j$ and a row weight of $i$ $[2]$.
 
-A regular LDPC code $(j,i)$ has a weight of $j$ for each column and a weight of
-$i$ for each row.\ref{[1]}
-
-An example of a parity-check matrix for a regular LDPC code where $j=3$ and
-$i=4$ is shown below:
+For example, a parity-check matrix for a regular LDPC code where $j=3$ and $i=4$ may be the following:
 
 $$\begin{bmatrix}
     1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -63,33 +61,33 @@ $$\begin{bmatrix}
     0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1
   \end{bmatrix}$$
 
-So this is a $(3,4)$ regular LDPC code where the column weight is 3 and the row
-weight is 4. The dimension of the code is $n=12$ and $n-k=9$.
+  The dimension of the code for the above parity matrix is $n=12$.
+  The rate is calculated as $R=\frac{k}{n}=1-\frac{j}{i}=\frac{1}{4}$.
 
-The rate $R=1-\frac{j}{i}=\frac{k}{n}=\frac{1}{4}$.
-
-Irregular LDPC codes have varying column and row weights. However, they are
-distributed uniformly across the parity-check matrix. Irregular LDPC codes can
-achieve better performance than regular LDPC codes, but they are more difficult
-to analyze and implement.
+With, irregular LDPC codes, each column may have a weight that is at most $j$ and each row may have a weight that is at most $i$.
+In fact, all of the column and row weights are not necessarily equal.
+Due to the distribution of parity checks throughout the parity-check matrix, irregular LDPC codes can achieve better performance than regular LDPC codes.
+However, irregular LDPC codes are more difficult to analyze and implement.
 
 \subsection{Tanner Graphs}
 A Tanner graph is a bipartite graph that represents the parity-check matrix of
 an LDPC code. The Tanner graph consists of two sets of nodes: variable nodes
 and check nodes. The edges of the graph connect variable nodes to check nodes
 and vice versa.
+Moreover, since the graph is bipartite, no variable nodes can be interconnected, nor can check nodes share an edge.
 
 The Tanner graph is used to visualize the structure of the LDPC code and to
 develop efficient decoding algorithms.
 
-For example, for this matrix: \[
+For example, the matrix
+\[
   \begin{bmatrix}
     1 & 1 & 0 & 0 \\
     1 & 0 & 1 & 1
   \end{bmatrix}
 \]
 
-The Tanner graph is shown below:
+may be represented as the following Tanner graph.
 
 \begin{figure}[htbp]
   \centerline{\includegraphics{Images/tanner_graph.png}}
@@ -97,14 +95,12 @@ The Tanner graph is shown below:
   \label{fig}
 \end{figure}
 
-In Fig. \ref{fig}, we see that there are two parity nodes.
+In Fig. \ref{fig}, we see that there are two check nodes, and four variable nodes.
 
-A \textbf{cycle} in a Tanner graph is a closed path that starts and ends at the
-same node.
+A \textbf{cycle} in a Tanner graph is a closed path that starts and ends at the same node.
 
-A \textbf{girth} of a Tanner graph is the length of the shortest cycle in the
-graph. A larger girth is desirable because it leads to better error-correction
-performance.
+The \textbf{girth} of a Tanner graph is the length of the shortest cycle in the graph.
+A larger girth is desirable because it leads to better error-correction performance.
 
 \subsection{Encoding and Generator Matrices}
 Given a parity-check matrix $H$ for an LDPC code, the generator matrix $G$ can
