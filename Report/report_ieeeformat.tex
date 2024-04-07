@@ -253,13 +253,11 @@ This way, if we calculate the parity bits and compare them with the received
 parity bits, we can find the error bit. Since the parity bits are the
 coordinate of the error bit, we can find the error bit by XORing the parity
 bits.
-<<<<<<< HEAD
+
 \subsection{Implementation on FPGA}
 % The typical cache-line size is 64 bits, thus we will use 64 bits input and one-bit error correction as the metrics to compare performance.
 % \subsubsection{Hamming Implementation}
-=======
 
->>>>>>> fcb9edfe154302d9f5cf45f859f78f3bd817936f
 Because of the nature of the Hamming code, it is easier to implement on FPGA.
 The error bit can be found by XORing the parity bits. The implementation can be
 found in our \href{https://github.com/luckunately/ELEC433-Projects}{GitHub
