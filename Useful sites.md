@@ -26,3 +26,6 @@ There are some interesting graphs that we might be interested to
 [link](https://www.comm.utoronto.ca/~weiyu/ben_masoud_LDPC_complexity.pdf)
 
 But to be honest, do not think I would understand this
+
+## FPGA implementation of low complexity LDPC iterative decoder
+[link](https://www.tandfonline.com/doi/full/10.1080/00207217.2015.1087052)
