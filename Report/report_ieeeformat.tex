@@ -26,7 +26,19 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \end{abstract}
 
 \section{Introduction}
-TODO: add introduction here
+Error correcting codes (ECC) have become an integral part of computer memory.
+With the advent of new memory technologies and an increase in memory density, bit errors occur more frequently, leading to data corruption.
+In 2007, the CERN computer centre measured and analyzed the quantity and types of errors that incurred data corruption [5].
+It was noted that the high volume of memory accesses executed by the computers was a strong factor in the high number of errors, and that in such complex systems, simple redundancies or single-bit error checks are not always sufficient.
+As memory systems gain in complexity, the need for data reliability and integrity remains crucial.
+Moreover, for highly specialized applications such as data storage and transportation in space missions [6], more robust error correction schemes are required due to overly noisy channels created by radiation.
+
+This problem has been studied, with various coding schemes and techniques used to detect and rectify the errors.
+For older systems, simple parity checks or single-bit correction, executed upon the retrieval of data from storage, used to be sufficient for safe-guarding memory integrity.
+However, with larger memory sizes and a high volume of data throughput, additional probing and correction schemes are necessary [5].
+For example, scrubbing is the periodic scanning of memory regions, in order to detect bit flips [6].
+While such error-preventive measures increase data integrity, they also incur significant performance and hardware overhead, since more resources must be allocated for error checking.
+Due to this trade-off, effective and low-complexity codes are considered for such applications in maintaining data reliability in memory systems.
 
 \section{LDPC Codes}
 Low-density parity-check codes, also known as LDPC codes, are a class of linear block
@@ -39,13 +51,9 @@ LDPC codes were first proposed by Gallager, as part of his Ph.D. thesis in 1960 
 An LDPC code with parameters $(n,j,i)$ has a block length of $n$, where each column of the parity check matrix contains at most $j$ ones, and where each row of the parity matrix contains at most $i$ ones.
 
 \subsection{Types of LDPC Codes}
-There are two main types of LDPC codes: regular and irregular. Regular LDPC
-codes have a constant column weight and row weight, while irregular LDPC codes
-have varying column and row weights. Regular LDPC codes are easier to analyze
-and implement, but irregular LDPC codes can achieve better performance.
+There are two main types of LDPC codes.
 
 A regular $(n,j,i)$ LDPC code has a column weight of $j$ and a row weight of $i$ [2].
-
 For example, a parity-check matrix for a regular LDPC code where $j=3$ and $i=4$ may be the following:
 
 $$\begin{bmatrix}
@@ -61,10 +69,10 @@ $$\begin{bmatrix}
     0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 0 & 0 & 1 & 1
   \end{bmatrix}$$
 
-  The dimension of the code for the above parity matrix is $n=12$.
-  The rate is calculated as $R=\frac{k}{n}=1-\frac{j}{i}=\frac{1}{4}$.
+The dimension of the code for the above parity matrix is $n=12$.
+The rate is calculated as $R=\frac{k}{n}=1-\frac{j}{i}=\frac{1}{4}$.
 
-With, irregular LDPC codes, each column may have a weight that is at most $j$ and each row may have a weight that is at most $i$.
+With irregular LDPC codes, each column may have a weight that is at most $j$ and each row may have a weight that is at most $i$.
 In fact, all of the column and row weights are not necessarily equal.
 Due to the distribution of parity checks throughout the parity-check matrix, irregular LDPC codes can achieve better performance than regular LDPC codes.
 However, irregular LDPC codes are more difficult to analyze and implement.
@@ -209,6 +217,9 @@ TODO: add conclusion
   \bibitem{b1} T. Wang and N. Balashov, ELEC433-Projects, 2024, GitHub repository, \url{https://github.com/luckunately/ELEC433-Projects}.
   \bibitem{b2} B. Kurkoski, Introduction to Low-Density Parity Check Codes, \url{https://www.jaist.ac.jp/~kurkoski/teaching/portfolio/uec_s05/S05-LDPC%20Lecture%201.pdf}.
   \bibitem{b3} R.G. Gallager, Low-Density Parity-Check Codes. Cambridge, MA: MIT Press, 1963 (Sc.D. MIT, 1960).
+  \bibitem{b4} H. Janati, pyldpc, 2020, GitHub repository, \url{https://github.com/hichamjanati/pyldpc}.
+  \bibitem{b5} B. Panzer-Steindel, Data integrity. CERN/IT, 2007, retrieved from \url{https://indico.cern.ch/event/13797/contributions/1362288/attachments/115080/163419/Data_integrity_v3.pdf}.
+  \bibitem{b5}S. Jeon, E. Hwang, B. V. K. V. Kumar and M. K. Cheng, "LDPC Codes for Memory Systems with Scrubbing," 2010 IEEE Global Telecommunications Conference GLOBECOM 2010, Miami, FL, USA, 2010, pp. 1-6, doi: 10.1109/GLOCOM.2010.5683367.
 \end{thebibliography}
 
 \end{document}
