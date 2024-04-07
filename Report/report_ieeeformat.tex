@@ -43,9 +43,9 @@ While such error-preventive measures increase data integrity, they also incur si
 Due to this trade-off, effective and low-complexity codes are considered for such applications in maintaining data reliability in memory systems.
 
 \section{LDPC Codes}
-Low-density parity-check codes, also known as LDPC codes, are a class of linear block
-codes that are characterized by sparse parity-check matrices. The sparsity of
-the parity-check matrix allows for efficient encoding and decoding algorithms.
+Low-density parity check codes, also known as LDPC codes, are a class of linear block
+codes that are characterized by sparse parity check matrices. The sparsity of
+the parity check matrix allows for efficient encoding and decoding algorithms.
 LDPC codes are also known to achieve near Shannon capacity performance when
 decoded using iterative message-passing algorithms.
 LDPC codes were first proposed by Gallager, as part of his Ph.D. thesis in 1960 [3].
@@ -56,7 +56,7 @@ An LDPC code with parameters $(n,j,i)$ has a block length of $n$, where each col
 There are two main types of LDPC codes.
 
 A regular $(n,j,i)$ LDPC code has a column weight of $j$ and a row weight of $i$ [2].
-For example, a parity-check matrix for a regular LDPC code where $j=3$ and $i=4$ may be the following:
+For example, a parity check matrix for a regular LDPC code where $j=3$ and $i=4$ may be the following:
 
 $$\begin{bmatrix}
     1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -76,11 +76,11 @@ The rate is calculated as $R=\frac{k}{n}=1-\frac{j}{i}=\frac{1}{4}$.
 
 With irregular LDPC codes, each column may have a weight that is at most $j$ and each row may have a weight that is at most $i$.
 In fact, all of the column and row weights are not necessarily equal.
-Due to the distribution of parity checks throughout the parity-check matrix, irregular LDPC codes can achieve better performance than regular LDPC codes.
+Due to the distribution of parity checks throughout the parity check matrix, irregular LDPC codes can achieve better performance than regular LDPC codes.
 However, irregular LDPC codes are more difficult to analyze and implement.
 
 \subsection{Tanner Graphs}
-A Tanner graph is a bipartite graph that represents the parity-check matrix of
+A Tanner graph is a bipartite graph [2] that represents the parity check matrix of
 an LDPC code. The Tanner graph consists of two sets of nodes: variable nodes
 and check nodes. The edges of the graph connect variable nodes to check nodes
 and vice versa.
@@ -101,7 +101,7 @@ may be represented as the following Tanner graph.
 
 \begin{figure}[htbp]
   \centerline{\includegraphics{Images/tanner_graph.png}}
-  \caption{Example of a figure caption.}
+  \caption{Tanner graph representation of a parity check matrix [2].}
   \label{fig}
 \end{figure}
 
@@ -112,8 +112,12 @@ A \textbf{cycle} in a Tanner graph is a closed path that starts and ends at the 
 The \textbf{girth} of a Tanner graph is the length of the shortest cycle in the graph.
 A larger girth is desirable because it leads to better error-correction performance.
 
-\subsection{Encoding and Generator Matrices}
-Given a parity-check matrix $H$ for an LDPC code, the generator matrix $G$ can
+A Tanner graph is useful for visualizing the relationship between parity check equations, in addition to acting as a visual mnemonic for certain LDPC decoding schemes.
+
+\subsection{LDPC Parity Check and Generator Matrices}
+\textbf{TODO}: how to find a valid Parity check matrix.
+
+Given a parity check matrix $H$ for an LDPC code, the generator matrix $G$ can
 be constructed in the following way:
 \begin{enumerate}
   \item Assume that the encoded code $c$ of length $n$ is composed of the parity bits
@@ -125,12 +129,15 @@ be constructed in the following way:
   \item Since we are in a binary field, $bH_1^T = mH_2^T \implies b =
           mH_2^T(H_1^T)^{-1}$. Name the matrix $H_2^T(H_1^T)^{-1}$ as $A$.
   \item So the generator matrix $G$ is $[A, I_{n-k}]$.
+
+\subsection{Encoding}
+\textbf{TODO}
 \end{enumerate}
 
-\subsection{Decoding and Parity Check Matrices}
-TODO
+\subsection{Decoding}
+\textbf{TODO}
 
-\section{Implementation of a Regular LDPC Code in HDL}
+\section{HDL Implementation of a Regular LDPC Code}
 An interesting point that Gallager makes in Chapter III of his thesis [3] is the fact that the notion of an ``optimal'' $(j,i)$ is not well defined.
 Gallager states that a regular LDPC code's limitation of capacity implies that the ``best'' $(j,i)$ code would perform essentially on the same level as a ``typical'', i.e. ``less optimal'' LDPC code with parameters $(j,i)$.
 Consequently, when implementing an LDPC code in HDL, a convenient parity check matrix was selected for simplicity.
@@ -205,7 +212,7 @@ hamming code, it is a good visit pattern for computing systems.
 This typical implementation is called \textbf{SECDED} (Single Error Correction,
 Double Error Detection) Hamming code. It can detect and correct single-bit
 errors and detect double-bit errors.
-\subsection{Implementation}
+
 The concept of Hamming code is detecting errors in half of the codewords. And
 then with different combinations of deleting patterns, we can locate a single
 bit.
@@ -223,8 +230,6 @@ Since the output is more than 64 bits, we need 7 parity bits as shown in
 The advantage of this kind of implementation would be that the difference of
 parity bits is the coordinate of the error bit which makes it easier to find
 the error bit.
-
-\subsubsection{Example of correcting error}
 
 We order the bits as shown below:
 
@@ -248,9 +253,13 @@ This way, if we calculate the parity bits and compare them with the received
 parity bits, we can find the error bit. Since the parity bits are the
 coordinate of the error bit, we can find the error bit by XORing the parity
 bits.
+<<<<<<< HEAD
 \subsection{Implementation on FPGA}
 % The typical cache-line size is 64 bits, thus we will use 64 bits input and one-bit error correction as the metrics to compare performance.
 % \subsubsection{Hamming Implementation}
+=======
+
+>>>>>>> fcb9edfe154302d9f5cf45f859f78f3bd817936f
 Because of the nature of the Hamming code, it is easier to implement on FPGA.
 The error bit can be found by XORing the parity bits. The implementation can be
 found in our \href{https://github.com/luckunately/ELEC433-Projects}{GitHub
@@ -281,7 +290,7 @@ Here is a summary of resources usage and performance analysis by Quartus Prime:
 
 % However, decoding is more difficult. The decoding algorithm for the Hamming code is the \textbf{syndrome decoding} algorithm. The algorithm is as follows:
 \section{Conclusion}
-TODO: add conclusion
+\textbf{TODO}
 
 \begin{thebibliography}{00}
   \bibitem{b1} T. Wang and N. Balashov, ELEC433-Projects, 2024, GitHub repository, \url{https://github.com/luckunately/ELEC433-Projects}.
