@@ -186,16 +186,15 @@ To summarize the algorithm in pseudo-code:
 \begin{algorithm}
   \caption{Bit-Flipping Decoding Algorithm}
   \begin{algorithmic}
-    \WHILE{parity check is not satisfied and maximum iteration is not reached}
+    \WHILE{parity check not satisfied and maximum iteration not reached}
       \FOR{each check node}
-        \IF{the check node is not satisfied}
+        \IF{check node is not satisfied}
           \STATE vote for flipping the bit
         \ELSE
           \STATE{vote for not flipping the bit}
         \ENDIF
       \ENDFOR
-      \STATE each bit vote for not flipping the bit
-      \STATE flip the bit with the majority vote
+      \STATE flip the bit corresponding to the majority vote
     \ENDWHILE
     \IF {parity check is satisfied}
     \STATE return the decoded message
@@ -206,39 +205,31 @@ To summarize the algorithm in pseudo-code:
 \end{algorithm}
 
 \subsection{Performance}
-On DE1-SOC, Quartus analysis shows that the highest frequency it can run is \textbf{325.73 MHz} under \textit{slow 1100 mV 85C mode}. (Remark: It is a common analysis criteria to analyze the complexity of combinational logic path. It limits the maximum frequency of the circuit.)
+For a DE1-SOC FPGA board, the analysis done in the software tool Quartus Prime\footnote{\url{https://www.intel.com/content/www/us/en/products/details/fpga/development-tools/quartus-prime.html}} shows that the highest frequency the hardware can be clocked is bounded by \textbf{325.73 MHz}, as estimated by the \textit{slow 1100 mV 85C model}, which is a specification of typical hardware operating conditions (i.e. operating at 1100 millivolts and 85 degrees Celsius).
+It is a common criterion to analyze the complexity of the combinational logic, which is often quantified by the maximum clock frequency at which the hardware can operate without race conditions.
 
-Here is a smmary of resources usage and performance analysis by Quartus Prime:
-% Looks like the table is too ugly, will do it manuuallly
-% \begin{figure}[htbp]
-%   \centerline{\includegraphics*{./Images/LDPC_resouce_usage.png}}
-%   \caption{LDPC resource usage and performance analysis.}
-%   \label{LDPC resource usage and performance analysis}
-% \end{figure}
+We include a concise summary of hardware resource usage and performance analysis, as done with Quartus:
 \begin{itemize}
-  \item Combinational ALUT usage for logic: 114 \begin{itemize}
-    \item 7 input functions: 0
+  \item Combinational ALUT\footnote{An FPGA board uses configurable logic blocks instead of hard-wired combinations of logic gates. These configurable logic units are are called Adaptive Look-up Tables, or ALUTs.} usage for logic: 114 \begin{itemize}
+      \item 7 input functions\footnote{An $n$-input function is an array of logic blocks that take an $n$-bit input. It is desirable to have few blocks where $n$ is large, i.e. $2$-input blocks are preferred.}: 0
     \item 6 input functions: 4
     \item 5 input functions: 10
     \item 4 input functions: 28
     \item $\leq$ 3 input functions: 72
   \end{itemize}
-  \item Dedicated logic registers: 72
+\item Dedicated logic registers\footnote{Logic registers are used to store temporary data during hardware computation. A register can be thought of as a ``memory cell''.}: 72
 \end{itemize}
 
 \section{Comparison with Hamming Code HDL Implementation}
-Typical Hamming code implementation uses 64-bit to 72-bit encoding. Input is 64
-bits since it is a typical cache line size. Although it is not an optimal
-hamming code, it is a good visit pattern for computing systems.
+Typical Hamming code implementation uses 64-bit to 72-bit encoding.
+An input is 64 bits since it corresponds to the size of a typical cache line in memory.
+Although these parameters do not correspond to an optimal Hamming code, it is a desirable and convenient size for 64-bit computing systems.
 
-This typical implementation is called \textbf{SECDED} (Single Error Correction,
-Double Error Detection) Hamming code. It can detect and correct single-bit
-errors and detect double-bit errors.
+The Single Error Correction Double Error Detection (SECDED) Hamming code can detect and correct single-bit errors, as well as detect double-bit errors.
 
-The concept of Hamming code is detecting errors in half of the codewords. And
-then with different combinations of deleting patterns, we can locate a single
-bit.
+The main concept behind the practical hardware implementation of the Hamming code is to detecting errors in such a way that the ensemble of parity bits, if non-zero, corresponds exactly to the index of the corrupted bit.
 
+For example, \textbf{TODO}
 \begin{figure}[htbp]
   \centerline{\includegraphics{Images/Hamming_example.png}}
   \caption{Parity bits and data bits in a Hamming code.}
@@ -276,14 +267,11 @@ parity bits, we can find the error bit. Since the parity bits are the
 coordinate of the error bit, we can find the error bit by XORing the parity
 bits.
 
-\subsection{Implementation on FPGA}
-% The typical cache-line size is 64 bits, thus we will use 64 bits input and one-bit error correction as the metrics to compare performance.
-% \subsubsection{Hamming Implementation}
-
+\subsection{FPGA Implementation}
 Because of the nature of the Hamming code, it is easier to implement on FPGA.
 The error bit can be found by XORing the parity bits. The implementation can be
 found in our \href{https://github.com/luckunately/ELEC433-Projects}{GitHub
-  Repo}[1]. %how can I add the reference hyperlink here?
+  Repo}[1].
 
   RTL viewer can be found on GitHub for \href{https://github.com/luckunately/ELEC433-Projects/blob/add-tex/Hamming72out/Hamming72out_RTL.pdf}{Hamming72out} and \href{https://github.com/luckunately/ELEC433-Projects/blob/add-tex/Hamming64in/Hamming64inRTL.pdf}{Hamming64in}.
 
