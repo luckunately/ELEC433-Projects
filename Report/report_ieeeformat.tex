@@ -115,27 +115,32 @@ A larger girth is desirable because it leads to better error-correction performa
 A Tanner graph is useful for visualizing the relationship between parity check equations, in addition to acting as a visual mnemonic for certain LDPC decoding schemes.
 
 \subsection{LDPC Parity Check and Generator Matrices}
-\textbf{TODO}: how to find a valid Parity check matrix.
+Given the parameters $(n,j,i)$, a valid LPDC parity check matrix may be constructed using the following procedure:
+\begin{enumerate}
+  \item Construct a sub-matrix $H_0$ of dimensions $\frac{n-i}{j}$ by $n$, where a ``diagonal'' of $i$ ones is constructed [2].
+    If we denote $1_1, 1_2, \ldots, 1_i$ as the ``indexed'' ones in each row, then the sub-matrix $H_0$ will look something like
+    $$\begin{bmatrix}
+      1_1   &\ldots& 1_i  & 0    & 0    & 0    & 0    &0     &\ldots& 0\\
+      0     &\ldots& 0    & 1_1  &\ldots& 1_i  & 0    &0     &\ldots& 0\\
+      \vdots&\ddots&\vdots&\vdots&\ddots&\vdots&\ddots&\vdots&\ddots&\vdots \\
+      0     &\ldots& 0    & 0    &\ldots& 0    & 0    & 1_1  &\ldots& 1_i \\
+    \end{bmatrix}$$
+  \item Find $j - 1$ different matrices that have pseudo-random column permutations of $H_0$. Denote these new sub-matrices as $H_1, H_2, \ldots, H_{j-1}$.
+  \item Construct the final parity check matrix $H$ by stacking sub-matrices $H_0,H_1,\ldots,H_{j-1}$ into a single $n-k$ by $n$ matrix.
+\end{enumerate}
 
 Given a parity check matrix $H$ for an LDPC code, the generator matrix $G$ can
-be constructed in the following way:
-\begin{enumerate}
-  \item Assume that the encoded code $c$ of length $n$ is composed of the parity bits
-        $b$ and the message bits $m$ in a form $c = [b, m]$.
-  \item Then if there are no errors in the code, $cH^T = [b, m]H^T = 0$.
-  \item Divide $H$ into $H = [H_1, H2]^T$ where $H_1$ is a square matrix of size $n-k$.
-        Note that $b$ is of length $n-k$ as well. So we can break the matrix
-        multiplication into $[b, m][H_1, H_2]^T = bH_1^T + mH_2^T = 0$.
-  \item Since we are in a binary field, $bH_1^T = mH_2^T \implies b =
-          mH_2^T(H_1^T)^{-1}$. Name the matrix $H_2^T(H_1^T)^{-1}$ as $A$.
-  \item So the generator matrix $G$ is $[A, I_{n-k}]$.
-\end{enumerate}
-\subsection{Encoding}
-\textbf{TODO}
+be constructed.
+If necessary, re-organize the codeword $\textbf{c}$ of length $n$ so that it is of the form $\textbf{c} = [\textbf{b}, \textbf{m}]$, where $\textbf{b}$ denotes the parity bits vector and $\textbf{m}$ denotes the message bits vector.
+    We note that, if there are no errors in the codeword, then it must be that $\textbf{c}H^T = [\textbf{b}, \textbf{m}]H^T = 0$.
 
+Sub-divide the parity matrix $H$ into two sub-matrices such that $H = [H_1, H_2]^T$ where $H_1$ is a square matrix of size $n-k$.
+    Note that $\textbf{b}$ is of length $n-k$ as well.
+    Therefore, we can break up the matrix
+    multiplication into $[\textbf{b}, \textbf{m}][H_1, H_2]^T = \textbf{b}H_1^T + \textbf{m}H_2^T = 0$.
+Since we are dealing with a code defined on a binary field, $\textbf{b}H_1^T = \textbf{m}H_2^T$ implies that $\textbf{b}= \textbf{m}H_2^T(H_1^T)^{-1}$.
 
-\subsection{Decoding}
-\textbf{TODO}
+    Let $A = H_2^T(H_1^T)^{-1}$, then the generator matrix $G$ is $[A, I_{n-k}]$.
 
 \section{HDL Implementation of a Regular LDPC Code}
 An interesting point that Gallager makes in Chapter III of his thesis [3] is the fact that the notion of an ``optimal'' $(j,i)$ is not well defined.
