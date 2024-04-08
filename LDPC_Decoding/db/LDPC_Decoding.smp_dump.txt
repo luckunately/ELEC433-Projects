@@ -1,9 +1,0 @@
-
-State Machine - |LDPC_Decoding|state
-Name state.notGood state.done state.Correction state.Happy state.Check state.IDEL 
-state.IDEL 0 0 0 0 0 0 
-state.Check 0 0 0 0 1 1 
-state.Happy 0 0 0 1 0 1 
-state.Correction 0 0 1 0 0 1 
-state.done 0 1 0 0 0 1 
-state.notGood 1 0 0 0 0 1 
