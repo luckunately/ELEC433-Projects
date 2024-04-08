@@ -28,7 +28,7 @@ T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \end{abstract}
 
 \section{Introduction}
-Error correcting codes (ECC) have become an integral part of computer memory.
+Error-correcting codes (ECC) have become an integral part of computer memory.
 With the advent of new memory technologies and an increase in memory density, bit errors occur more frequently, leading to data corruption.
 In 2007, the CERN computer centre measured and analyzed the quantity and types of errors that incurred data corruption [5].
 It was noted that the high volume of memory accesses executed by the computers was a strong factor in the high number of errors, and that in such complex systems, simple redundancies or single-bit error checks are not always sufficient.
@@ -37,9 +37,9 @@ Moreover, for highly specialized applications such as data storage and transport
 
 This problem has been studied, with various coding schemes and techniques used to detect and rectify the errors.
 For older systems, simple parity checks or single-bit correction, executed upon the retrieval of data from storage, used to be sufficient for safe-guarding memory integrity.
-However, with larger memory sizes and a high volume of data throughput, additional probing and correction schemes are necessary [5].
+However, with larger memories and a high volume of data throughput, additional probing and correction schemes are necessary [5].
 For example, scrubbing is the periodic scanning of memory regions, in order to detect bit flips [6].
-While such error-preventive measures increase data integrity, they also incur significant performance and hardware overhead, since more resources must be allocated for error checking.
+While such error-preventive measures increase data integrity, they also incur significant performance and hardware overhead, since more resources must be allocated for error-checking.
 Due to this trade-off, effective and low-complexity codes are considered for such applications in maintaining data reliability in memory systems.
 
 \section{LDPC Codes}
@@ -55,8 +55,8 @@ An LDPC code with parameters $(n,j,i)$ has a block length of $n$, where each col
 \subsection{Types of LDPC Codes}
 There are two main types of LDPC codes.
 
-A regular $(n,j,i)$ LDPC code has a column weight of $j$ and a row weight of $i$ [2].
-For example, a parity check matrix for a regular LDPC code where $j=3$ and $i=4$ may be the following:
+A regular $(n,j,i)$ LDPC code [2] has a column weight of $j$ and a row weight of $i$.
+For example, a parity check matrix for a regular LDPC code where $j=3$ and $i=4$ may resemble the following:
 
 $$\begin{bmatrix}
     1 & 1 & 1 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
@@ -78,6 +78,10 @@ With irregular LDPC codes, each column may have a weight that is at most $j$ and
 In fact, all of the column and row weights are not necessarily equal.
 Due to the distribution of parity checks throughout the parity check matrix, irregular LDPC codes can achieve better performance than regular LDPC codes.
 However, irregular LDPC codes are more difficult to analyze and implement.
+An example of an application where irregular LDPC codes offer efficiency 
+is the correction of asymmetric bit errors in spin-transfer torque random access memory (STT RAM) [8], which is an error type where traditional codes like BCH and Reed-Solomon fall short in terms of effectiveness.
+Irregular LDPC codes are able to combat this issue in STT RAM by providing more flexibility with regards to the location and number of parity check bits,
+thus enabling superior performance for bit errors with skewed probabilities.
 
 \subsection{Tanner Graphs}
 A Tanner graph is a bipartite graph [2] that represents the parity check matrix of
@@ -140,7 +144,7 @@ Sub-divide the parity matrix $H$ into two sub-matrices such that $H = [H_1, H_2]
     multiplication into $[\textbf{b}, \textbf{m}][H_1, H_2]^T = \textbf{b}H_1^T + \textbf{m}H_2^T = 0$.
 Since we are dealing with a code defined on a binary field, $\textbf{b}H_1^T = \textbf{m}H_2^T$ implies that $\textbf{b}= \textbf{m}H_2^T(H_1^T)^{-1}$.
 
-    Let $A = H_2^T(H_1^T)^{-1}$, then the generator matrix $G$ is $[A, I_{n-k}]$.
+    With $A = H_2^T(H_1^T)^{-1}$, the generator matrix $G$ is $[A, I_{n-k}]$.
 
 \section{HDL Implementation of a Regular LDPC Code}
 In order to assess the effectiveness of LDPC codes in memory, we implemented a sample LDPC code in System Verilog, a Hardware Description Language (HDL), which can be synthesized into logic gates and simulated on a Field-Programmable Gate Array (FPGA) board.
@@ -229,27 +233,23 @@ The Single Error Correction Double Error Detection (SECDED) Hamming code can det
 
 The main concept behind the practical hardware implementation of the Hamming code is to detecting errors in such a way that the ensemble of parity bits, if non-zero, corresponds exactly to the index of the corrupted bit.
 
-For example, \textbf{TODO}
-\begin{figure}[htbp]
-  \centerline{\includegraphics{Images/Hamming_example.png}}
-  \caption{Parity bits and data bits in a Hamming code.}
-  \label{fig_2}
-\end{figure}
-
-Since the output is more than 64 bits, we need 7 parity bits as shown in
-\ref{fig_2}. For an interactive example, check out the Excel sheet in our
-\href{https://github.com/luckunately/ELEC433-Projects}{GitHub Repo}[1]. %how can I add the reference hyperlink here?
-
-The advantage of this kind of implementation would be that the difference of
-parity bits is the coordinate of the error bit which makes it easier to find
-the error bit.
-
-We order the bits as shown below:
-
 \begin{figure}[htbp]
   \centerline{\includegraphics{Images/Hamming_bits_order.png}}
   \caption{Number parity bits and data bits in a Hamming code.}
   \label{fig_3}
+\end{figure}
+
+To achieve this error indexing feature, we assign each codeword bit an index,
+and ensure that the parity bits are placed at indices $2^m$, for increasing natural numbers $m$ until the end of the codeword is reached.
+For example, Fig. \ref{fig_3} shows a codeword that is organized in tabular form.
+The parity bits are highlighted in yellow, and the remaining bits are the data bits of the original message, except for the zeroth bit, which acts as an additional parity check bit for double-error detection.
+Furthermore, as described above, we notice that the highlighted bits correspond to indices $2^0 = 1$, $2^1 = 2, 2^2 = 4, \ldots, 2^6 = 64$, since there is a total number of $71$ bits shown.
+For an interactive example, please see the Excel spreadsheet \verb+Hamming_code_demo.xlsx+ in our \href{https://github.com/luckunately/ELEC433-Projects}{GitHub repository} [1].
+
+\begin{figure}[htbp]
+  \centerline{\includegraphics{Images/Hamming_example.png}}
+  \caption{Parity bits and data bits in a Hamming code.}
+  \label{fig_2}
 \end{figure}
 
 There are a total of 72 bits, which can be expressed in binary from
@@ -307,8 +307,9 @@ Here is a summary of resources usage and performance analysis by Quartus Prime:
   \bibitem{b3} R.G. Gallager, Low-Density Parity-Check Codes. Cambridge, MA: MIT Press, 1963 (Sc.D. MIT, 1960).
   \bibitem{b4} H. Janati, pyldpc, 2020, GitHub repository, \url{https://github.com/hichamjanati/pyldpc}.
   \bibitem{b5} B. Panzer-Steindel, Data integrity. CERN/IT, 2007, retrieved from \url{https://indico.cern.ch/event/13797/contributions/1362288/attachments/115080/163419/Data_integrity_v3.pdf}.
-  \bibitem{b5}S. Jeon, E. Hwang, B. V. K. V. Kumar and M. K. Cheng, ``LDPC Codes for Memory Systems with Scrubbing'', 2010 IEEE Global Telecommunications Conference GLOBECOM 2010, Miami, FL, USA, 2010, pp. 1-6, doi: 10.1109/GLOCOM.2010.5683367.
-  \bibitem{b6} S. Verma, S. Sharma, (2016) `FPGA implementation of low complexity LDPC iterative decoder', International Journal of Electronics, 103(7), pp. 1112-1126. doi:\url{https://doi.org/10.1080/00207217.2015.1087052}
+  \bibitem{b6}S. Jeon, E. Hwang, B. V. K. V. Kumar and M. K. Cheng, ``LDPC Codes for Memory Systems with Scrubbing'', 2010 IEEE Global Telecommunications Conference GLOBECOM 2010, Miami, FL, USA, 2010, pp. 1-6, doi: 10.1109/GLOCOM.2010.5683367.
+  \bibitem{b7} S. Verma, S. Sharma, (2016) `FPGA implementation of low complexity LDPC iterative decoder', International Journal of Electronics, 103(7), pp. 1112-1126. doi:\url{https://doi.org/10.1080/00207217.2015.1087052}.
+  \bibitem{b8} Bohua Li, Yukui Pei, and Wujie Wen. 2018. Efficient LDPC Code Design for Combating Asymmetric Errors in STT-RAM. J. Emerg. Technol. Comput. Syst. 14, 1, Article 10 (January 2018), 20 pages. doi: \url{https://doi.org/10.1145/3154836}.
 \end{thebibliography}
 
 \end{document}
