@@ -132,7 +132,7 @@ Given the parameters $(n,j,i)$, a valid LPDC parity check matrix may be construc
       0     &\ldots& 0    & 0    &\ldots& 0    & 0    & 1_1  &\ldots& 1_i \\
     \end{bmatrix}$$
   \item Find $j - 1$ different matrices that have pseudo-random column permutations of $H_0$. Denote these new sub-matrices as $H_1, H_2, \ldots, H_{j-1}$.
-  \item Construct the final parity check matrix $H$ by stacking sub-matrices $H_0,H_1,\ldots,H_{j-1}$ into a single $n-k$ by $n$ matrix.
+  \item Construct the final parity check matrix $H$ by combining sub-matrices $H_0,H_1,\ldots,H_{j-1}$ side-by-side into a single $n-k$ by $n$ matrix.
 \end{enumerate}
 
 Given a parity check matrix $H$ for an LDPC code, the generator matrix $G$ can
